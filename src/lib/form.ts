@@ -8,7 +8,8 @@ export interface FormEntry {
 }
 
 const HEADER_LABEL = /^(항목|구분|질문|문항|item|field|question)$/i
-const HEADER_VALUE = /내용|값|작성|답변|응답|value|answer/i
+/** "작성 내용", "답변란"처럼 값 칸 전체가 헤더 문구일 때만 헤더로 본다. 부분 일치면 "답변 대기 중" 같은 실제 값도 걸린다. */
+const HEADER_VALUE = /^(작성\s*|입력\s*)?(내용|값|답변|응답)(\s*란)?$|^(value|answer)$/i
 
 function usedColumns(grid: Cell[][]): number[] {
   const width = grid.reduce((w, r) => Math.max(w, r.length), 0)
@@ -42,14 +43,17 @@ export function looksLikeForm(grid: Cell[][]): boolean {
 
 export const FILE_COLUMN = '파일명'
 
+/** 양식 항목 이름이 FILE_COLUMN과 같으면 실제 파일명 열을 덮어쓰지 않도록 이름을 바꾼다 */
+const columnOf = (label: string) => (label === FILE_COLUMN ? `${FILE_COLUMN} (항목)` : label)
+
 /** 여러 양식을 1양식 = 1행인 표로 합친다. 열 순서는 라벨이 처음 나온 순서. */
 export function mergeForms(forms: { sheet: Sheet; entries: FormEntry[] }[]): Pick<Sheet, 'columns' | 'rows'> {
   const labels: string[] = []
-  for (const f of forms) for (const e of f.entries) if (!labels.includes(e.label)) labels.push(e.label)
+  for (const f of forms) for (const e of f.entries) if (!labels.includes(columnOf(e.label))) labels.push(columnOf(e.label))
   const rows = forms.map((f) => {
     const row: Row = { [FILE_COLUMN]: f.sheet.fileName }
     for (const l of labels) row[l] = null
-    for (const e of f.entries) row[e.label] = typeof e.value === 'string' ? e.value.trim() || null : e.value
+    for (const e of f.entries) row[columnOf(e.label)] = typeof e.value === 'string' ? e.value.trim() || null : e.value
     return row
   })
   return { columns: [FILE_COLUMN, ...labels], rows }

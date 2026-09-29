@@ -13,9 +13,11 @@ npm run dev      # Vite 개발 서버
 npm run build    # tsc -b (타입 체크) 후 vite build → dist/
 npm run lint     # ESLint (flat config, eslint.config.js)
 npm run preview  # 빌드된 dist/ 미리보기
+npm test         # Vitest 단위 테스트 (src/lib/*.test.ts)
+npm run coverage # 테스트 + analyze.ts/form.ts 커버리지 리포트 → coverage/
 ```
 
-테스트 러너는 설정되어 있지 않다. `npm run build`가 타입 체크 역할을 한다 (strict 모드이며 `noUnusedLocals`/`noUnusedParameters`가 켜져 있어 사용하지 않는 심볼이 있으면 빌드가 실패한다).
+테스트는 Vitest로 `src/lib/`의 순수 함수(`analyze.ts`, `form.ts`)만 대상으로 한다. 컴포넌트·`parse.ts`(SheetJS 위임)는 테스트하지 않는다. `npm run build`가 타입 체크 역할을 한다 (strict 모드이며 `noUnusedLocals`/`noUnusedParameters`가 켜져 있어 사용하지 않는 심볼이 있으면 빌드가 실패한다).
 
 `xlsx`는 npm 레지스트리가 아니라 SheetJS CDN tarball(`https://cdn.sheetjs.com/...`)에서 설치한다. npm의 `xlsx` 패키지는 오래된 버전이므로 이 의존성을 "고치지" 말 것.
 
