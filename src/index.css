@@ -1,0 +1,461 @@
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --grid: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.1);
+  --hover: rgba(11, 11, 11, 0.05);
+  --series-1: #2a78d6;
+  --accent: #256abf;
+  --accent-soft: #cde2fb;
+  --critical: #d03b3b;
+  --radius: 10px;
+
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  background: var(--page);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --hover: rgba(255, 255, 255, 0.06);
+    --series-1: #3987e5;
+    --accent: #6da7ec;
+    --accent-soft: #184f95;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --grid: #2c2c2a;
+  --baseline: #383835;
+  --border: rgba(255, 255, 255, 0.1);
+  --hover: rgba(255, 255, 255, 0.06);
+  --series-1: #3987e5;
+  --accent: #6da7ec;
+  --accent-soft: #184f95;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+h1 {
+  font-size: 1.25rem;
+}
+h2 {
+  font-size: 1rem;
+}
+h3 {
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+.small {
+  font-size: 0.8rem;
+}
+
+.app {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* 업로드 영역 */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 260px;
+  padding: 32px 16px;
+  text-align: center;
+  background: var(--surface);
+  border: 1.5px dashed var(--baseline);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dropzone:hover,
+.dropzone:focus-visible,
+.dropzone.dragging {
+  border-color: var(--accent);
+  background: var(--hover);
+  outline: none;
+}
+.dropzone.compact {
+  min-height: 0;
+  padding: 6px 14px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--border);
+  font-size: 0.875rem;
+}
+
+/* 버튼 */
+.btn {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: var(--hover);
+}
+.link {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.link:hover {
+  text-decoration: underline;
+}
+
+/* 탭 */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+}
+.tab {
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 8px 12px;
+  color: var(--text-secondary);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tab[aria-selected='true'] {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 카드 */
+.card {
+  min-width: 0;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.badge {
+  flex-shrink: 0;
+  padding: 1px 8px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.pill {
+  padding: 1px 8px;
+  font-size: 0.75rem;
+  color: var(--critical);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+/* 요약 타일 */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.tile {
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.tile-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.tile-value {
+  font-size: 1.6rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.insights {
+  margin: 0;
+  padding-left: 1.1em;
+  color: var(--text-primary);
+}
+.insights li + li {
+  margin-top: 6px;
+}
+
+/* 컬럼 카드 */
+.column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.column-card .card-header {
+  margin-bottom: 2px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 12px;
+  margin: 10px 0 12px;
+}
+.stats dt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.stats dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 그룹 집계 */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+select {
+  font: inherit;
+  font-size: 0.875rem;
+  min-width: 140px;
+  max-width: 260px;
+  padding: 5px 8px;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+details summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* 표 */
+.table-scroll {
+  overflow: auto;
+  max-height: 480px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.table th,
+.table td {
+  padding: 6px 10px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--grid);
+}
+.table th {
+  position: sticky;
+  top: 0;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface);
+}
+.table .num {
+  text-align: right;
+}
+details .table {
+  margin-top: 8px;
+}
+
+/* 양식 */
+.form-entries {
+  margin: 0;
+}
+.form-entries > div {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) 2fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--grid);
+}
+.form-entries dt {
+  color: var(--text-secondary);
+}
+.form-entries dd {
+  margin: 0;
+  white-space: pre-wrap;
+}
+.hint {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: var(--hover);
+  border-radius: 8px;
+}
+.responses {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.responses li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--grid);
+}
+.responses p {
+  margin: 2px 0 0;
+  white-space: pre-wrap;
+}
+.sources ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.sources li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 0.85rem;
+}
+
+/* 차트 툴팁 */
+.chart-tooltip {
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+.chart-tooltip-title {
+  margin-bottom: 2px;
+  color: var(--text-secondary);
+}
+.chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-tooltip-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--series-1);
+}
+.recharts-surface:focus {
+  outline: none;
+}
+
+.empty,
+.error {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-secondary);
+}
+.error {
+  color: var(--critical);
+}
+
+@media (max-width: 640px) {
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .column-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-entries > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .controls label,
+  select {
+    width: 100%;
+    max-width: none;
+  }
+}
